@@ -1,0 +1,59 @@
+{
+  "challenges": {
+    "c00": {
+      "flag_hash": "98d234db7e91f5ba026a25d0d6f17bc5ee0a347ea2216b0c9de06d43536d49f4",
+      "solved": true
+    },
+    "c01": {
+      "flag_hash": "d2246ba9d77aa0cae11a5ab31e8c2b6622a8dabdc280af1707582319c6b4f027",
+      "solved": true
+    },
+    "c02": {
+      "flag_hash": "8fd23ae606bfe03f898b29f4efe25a3fadf47f05e18af4ee195f6e8268bf921a",
+      "solved": true
+    },
+    "c03": {
+      "flag_hash": "9774c9b6c77358bb164788dc5c94331d284dd30682f6962ad9509ceb2e99e8e0",
+      "solved": false
+    },
+    "c04": {
+      "flag_hash": "1a408af0365bdfb0e40612665b126815d5cc7cf9f417c9bd6ccf72d51a41205d",
+      "solved": false
+    },
+    "c05": {
+      "flag_hash": "f8d4f0914a671ee78541bbbc558222ea6416303baaf5556a51b27844c48a05a7",
+      "solved": false
+    },
+    "c06": {
+      "flag_hash": "1dd4cec60716ac1f7a7573e9d99b36bc813559c7f209c53d3a6920a2511a3d6b",
+      "solved": false
+    },
+    "c07": {
+      "flag_hash": "5cd0316dfa701175f47909bb82294f68fff1b95c37ede1fffe45a6710e6aa2a3",
+      "solved": false
+    },
+    "c08": {
+      "flag_hash": "de53336f05650baae8100a79b8668d0d5e766bcaae472f90728405e09b77d359",
+      "solved": false
+    },
+    "c09": {
+      "flag_hash": "7f9eede9b60328f5d016ad81834923702a9b2822e2597e2475fea4f3acdd16b9",
+      "solved": false
+    },
+    "c10": {
+      "flag_hash": "4d42742e3ae418ebd7220b21f7c9abe995d63033ccf220b16f03459292f6faab",
+      "solved": false
+    },
+    "c100": {
+      "flag_hash": "481e567306f22b7873721de49fa50c1060d3fd38e15fc4a643e8de55610e28f1",
+      "solved": false
+    },
+    "c201": {
+      "flag_hash": "0442d8fe1275c2f9ea9f354b77f5d178ff697ccc737a72380a11ee0eada4d4be",
+      "solved": false
+    }
+  },
+  "profile": {
+    "selected_title": "apprentice"
+  }
+}

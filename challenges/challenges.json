@@ -1,0 +1,119 @@
+[
+  {
+    "id": "c00",
+    "title": "Challenge C00 — Node Runner 🚀",
+    "description": "Welcome to your first ROS2 challenge! This is where your journey into robotics begins.",
+    "full_description": "# Challenge C00 — Node Runner 🚀\n\nWelcome to your first ROS2 challenge! This is where your journey into robotics begins.\n\n## 🎯 Objective\nLaunch a ROS2 node and discover the hidden flag in its console output.\n\n## 📖 Story\nYou've just joined a robotics team, and your first task is simple: run a diagnostic node that's been prepared for you. Somewhere in its output lies a secret flag. Can you find it?\n\n## 🧩 Your Mission\n1. Navigate to the challenge directory\n2. Build the ROS2 workspace\n3. Launch the node\n4. Observe the console output carefully\n5. Find and submit the flag\n\n## 🛠️ Commands You'll Need\n\n### Navigate to the challenge\n```bash\ncd challenge0\n```\n\n### Source the Workspace\nBefore running any ROS2 commands, you need to \"source\" the workspace:\n```bash\nsource install/setup.bash\n```\n\n**What does sourcing do?**  \nWhen you source the setup file, you're telling your terminal where to find all the ROS2 packages and executables in this workspace. Think of it like adding the workspace to your terminal's \"address book\" so it knows where everything is located.\n\n**Why is this important?**  \nWithout sourcing, your terminal won't recognize the `challenge_c00` package or any other packages in the workspace. You'll get a \"package not found\" error!\n\n**Pro tip:** You need to source the workspace in every new terminal window you open. It's a good habit to source right after navigating to your workspace.\n\n### Running ROS2 Nodes\nTo execute a ROS2 node, you use the `ros2 run` command with this syntax:\n```bash\nros2 run <package_name> <executable_name>\n```\n\n- **package_name**: The name of the ROS2 package containing the node\n- **executable_name**: The name of the node you want to run\n\n**Package Naming Convention:**  \nAll challenges follow the pattern `challenge_c<number>`. For this challenge, the package name is `challenge_c00`.\n\n**Finding the Executable:**  \nAfter typing the package name, press **TAB** on your keyboard. The terminal will show you all available executables in that package! This autocomplete feature is your best friend in ROS2.\n\nTry it:\n```bash\nros2 run challenge_c00 <press TAB here>\n```\n\n**Tip:** The flag will appear in the terminal output. Look for a string that stands out!\n\n## 📚 What You're Learning\n\n### ROS2 Nodes: The Building Blocks\nA ROS2 **node** is like a mini-program that performs a specific task. Think of it as a specialized worker in a factory:\n- Each node has a **unique name** (like an employee ID)\n- Nodes can **communicate** with each other through topics, services, and parameters\n- Multiple nodes work together to create complex robotic behaviors\n\n### Why This Matters\nEvery robot you'll ever program starts with a node. Whether you're controlling a drone, a self-driving car, or a robot arm, understanding nodes is your foundation.\n\n## 💡 Hints\n- The flag format is typically: `FLAG{...}`\n- All the information you need is in the console output\n- Look for the executable name in the challenge description!\n\n---\n\n*Good luck, and welcome to NodeArena! 🎮*",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c01",
+    "title": "Challenge C01 — Publisher Basics 📡",
+    "description": "Your ROS2 journey continues! Time to learn how nodes communicate with each other.",
+    "full_description": "# Challenge C01 — Publisher Basics 📡\n\nYour ROS2 journey continues! Time to learn how nodes communicate with each other.\n\n## 🎯 Objective\nRetrieve a flag that's being published on a ROS2 topic.\n\n## 📖 Story\nA node is broadcasting a secret message continuously. Your job is to listen in on the right channel and capture the flag. But first, you need to find out which channel it's using!\n\n## 🧩 Your Mission\n1. Navigate to the challenge directory\n2. Source the workspace\n3. Run the challenge node\n4. Discover which topic the flag is being published on\n5. Listen to that topic to retrieve the flag\n\n## 🛠️ Commands You'll Need\n\n### Navigate to the challenge\n```bash\ncd challenge1\n```\n\n### Source the Workspace\nRemember to source the workspace so your terminal knows where to find the ROS2 packages:\n```bash\nsource install/setup.bash\n```\n\n### Running the Challenge Node\nThe package name is `challenge_c01`. Use TAB completion to find the executable:\n```bash\nros2 run challenge_c01 <press TAB>\n```\n\n### Discovering Topics\nTo see all active topics in the ROS2 system, use:\n```bash\nros2 topic list\n```\n\nThis command shows you all the \"channels\" that nodes are currently using to communicate. One of these topics contains your flag!\n\n### Listening to a Topic\nOnce you've identified the correct topic, you can listen to messages being published on it:\n```bash\nros2 topic echo <topic_name>\n```\n\nReplace `<topic_name>` with the topic you want to listen to. The messages will appear in your terminal in real-time.\n\n**Tip:** Use `Ctrl+C` to stop listening to a topic when you're done.\n\n## 📚 What You're Learning\n\n### Topics: The Communication Channels\nA ROS2 **topic** is like a radio frequency - nodes can broadcast messages on it, and other nodes can tune in to listen. Key concepts:\n- **Publisher**: A node that sends messages to a topic (like a radio transmitter)\n- **Subscriber**: A node that receives messages from a topic (like a radio receiver)\n- **Message**: The data being sent (in this case, a string containing the flag)\n\n### Why Topics Matter\nTopics enable **decoupled communication** - the publisher doesn't need to know who's listening, and subscribers don't need to know who's sending. This makes ROS2 systems flexible and scalable. A single topic can have multiple publishers and subscribers!\n\n### The Publish-Subscribe Pattern\nThis challenge demonstrates asynchronous message passing:\n1. A node publishes data to a topic at regular intervals\n2. You subscribe to that topic using the CLI\n3. Messages flow from publisher to subscriber automatically\n\nThis is one of the most fundamental patterns in robotics - sensors publish data, and other nodes subscribe to process it.\n\n## 💡 Hints\n- The challenge node will tell you it started - that means it's publishing!\n- Topic names often relate to what they're publishing\n- You need TWO terminal windows: one to run the node, one to echo the topic\n- The flag format is: `FLAG{...}`\n\n---\n\n*Keep exploring! You're learning the language of robots. 🤖*",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c02",
+    "title": "Challenge C02 — Subscriber Trigger 🔐",
+    "description": "Time to learn about interactive communication! Nodes can react to your messages.",
+    "full_description": "# Challenge C02 — Subscriber Trigger 🔐\n\nTime to learn about interactive communication! Nodes can react to your messages.\n\n## 🎯 Objective\nTrigger a node to release the flag by sending the correct message to its input topic.\n\n## 📖 Story\nThe flag is locked away inside a node that's waiting for a specific password. Send the right message to the right topic, and the node will publish the flag on another topic. It's like knocking on the right door with the right secret phrase!\n\n## 🧩 Your Mission\n1. Navigate to the challenge directory\n2. Source the workspace\n3. Run the challenge node\n4. Discover the input topic the node is listening to\n5. Find out what message format is expected\n6. Send the correct message to trigger the flag\n7. Listen to the output topic to capture the flag\n\n## 🛠️ Commands You'll Need\n\n### Navigate to the challenge\n```bash\ncd challenge2\n```\n\n### Source the Workspace\n```bash\nsource install/setup.bash\n```\n\n### Running the Challenge Node\nThe package name is `challenge_c02`. Find the executable using TAB:\n```bash\nros2 run challenge_c02 <press TAB>\n```\n\n### Discovering Topics\nList all active topics to find which ones this challenge uses:\n```bash\nros2 topic list\n```\n\nLook for topics with names related to \"c02\". There should be at least one for input!\n\n### Getting Topic Information\nTo learn more about a specific topic (like what type of messages it expects), use:\n```bash\nros2 topic info <topic_name>\n```\n\nThis shows you the message type being used on that topic.\n\n### Publishing to a Topic\nTo send a message to a topic from the command line:\n```bash\nros2 topic pub <topic_name> <message_type> '<message_data>'\n```\n\nFor string messages, the format looks like:\n```bash\nros2 topic pub /example_topic std_msgs/msg/String \"data: 'your message here'\"\n```\n\n**Tip:** After running the pub command, press `Ctrl+C` to stop publishing (unless you only want to send it once - see the hint below!)\n\n### Listening to Topics\nUse the echo command to listen for the flag on the output topic:\n```bash\nros2 topic echo <topic_name>\n```\n\n## 📚 What You're Learning\n\n### Subscribers: The Listeners\nWhile publishers broadcast messages, **subscribers** listen and react to them. Think of it as:\n- **Publisher**: \"I'm announcing something to anyone who cares\"\n- **Subscriber**: \"I'm waiting for specific information, and I'll do something when I hear it\"\n\n### Reactive Programming\nThis challenge demonstrates **event-driven behavior**:\n1. The node waits for a specific message\n2. When it receives the correct input, it performs an action (publishing the flag)\n3. If the input is wrong, it gives you feedback\n\nThis pattern is everywhere in robotics:\n- A robot arm waits for position commands\n- A navigation system reacts to obstacle detections\n- A drone responds to flight control messages\n\n### Message Types\nEvery topic has a **message type** that defines the structure of the data. In this challenge, you're working with `std_msgs/msg/String`, which is a simple text message. Understanding message types is crucial for proper communication between nodes.\n\n### Bidirectional Communication\nUnlike Challenge C01 where you only listened, here you're both **sending** and **receiving** messages. This is how complex robotic systems coordinate - nodes talk back and forth to accomplish tasks.\n\n## 💡 Hints\n- You'll need at least TWO terminal windows: one for the node, one for your commands\n- Try THREE terminals for convenience: node, publishing, and echoing\n- The node will give you feedback if your message is incorrect\n- Look carefully at the topic names - they tell you their purpose\n- To send a message just once instead of continuously, add the `--once` flag to `ros2 topic pub`\n- The trigger word might be simpler than you think!\n\n---\n\n*Interactive communication unlocked! You're becoming a ROS2 expert. �",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c03",
+    "title": "Challenge C03 — Parameter Seeker",
+    "description": "## 🏁 Objective Unlock a flag by changing a node's parameters at runtime.",
+    "full_description": "# Challenge C03 — Parameter Seeker\n\n## 🏁 Objective\nUnlock a flag by changing a node's parameters at runtime.\n\n## 🧩 Task\nExplore and modify the node’s parameters to reveal the flag.\n\n## Parameters and Dynamic Configuration\n**Parameters** in ROS2 are key-value pairs associated with a node that allow dynamic configuration.  \nThey can control the behavior of the node without requiring a restart.  \nUsing parameters, nodes can expose internal settings such as access codes, thresholds, or operational modes.  \nThis challenge teaches how parameters can influence node behavior, and how to interact with them programmatically or via CLI.\n",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c04",
+    "title": "Challenge C04 — Service Unlocker",
+    "description": "## 🏁 Objective Retrieve a flag by calling a ROS2 service.",
+    "full_description": "# Challenge C04 — Service Unlocker\n\n## 🏁 Objective\nRetrieve a flag by calling a ROS2 service.\n\n## 🧩 Task\nDiscover the service and call it to obtain the flag.\n\n## Services and Synchronous Communication\nA **service** in ROS2 is a synchronous request/response mechanism between nodes.  \nUnlike topics, which are asynchronous streams, a service call waits for a response.  \nNodes can offer services to perform actions or provide information upon request.  \nIn this challenge, calling the correct service triggers the node to return the flag.  \nThis introduces the concept of **RPC-like communication** in ROS2, which complements the asynchronous topic-based messaging.\n",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c05",
+    "title": "Challenge C05 — Topic Relay",
+    "description": "## 🏁 Objective Make the node relay messages and discover the secret trigger that causes it to publish the flag.",
+    "full_description": "# Challenge C05 — Topic Relay\n\n## 🏁 Objective\nMake the node relay messages and discover the secret trigger that causes it to publish the flag.\n\n## 🧩 Task\nFind the relay input channel and send the right message to cause the node to output the flag.\n\n## Explanation\nThis challenge combines publishing and subscribing: one node receives messages on an input topic and republishes them on an output topic. A relay pattern is common in robotics where one component forwards or transforms messages for another. Here, the node also watches for a particular trigger message; when that trigger arrives it publishes the flag on the output topic.  \n\nYou will practice:\n- Inspecting running topics and their flow\n- Sending messages that other nodes will react to\n- Observing how a node can act both as a subscriber and as a publisher simultaneously\n",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c06",
+    "title": "Challenge C06 — Parameter-Gated Topic",
+    "description": "## 🏁 Objective A node publishes an encoded message. Inspect the node's parameters to learn the decoding key and recover the flag.",
+    "full_description": "# Challenge C06 — Parameter-Gated Topic\n\n## 🏁 Objective\nA node publishes an encoded message. Inspect the node's parameters to learn the decoding key and recover the flag.\n\n## 🧩 Task\nFind the published encoded string and the node parameter that explains how to decode it. Use the information to decode and obtain the flag.\n\n## Explanation\nThis challenge introduces how parameters and topics can be used together to convey and protect information. The node regularly publishes a message which is a simple Caesar-ciphered version of the real flag. The decoding key is exposed as a node parameter (a runtime configuration value).  \n\nKey learning points:\n- **Parameters** can contain metadata or keys that affect how data should be interpreted.\n- **Topics** deliver data streams; sometimes the data needs post-processing or decoding.\n- By combining parameter inspection with topic observation, you can reconstruct hidden information.\n",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c07",
+    "title": "Challenge C07 — Multi-Step Unlock",
+    "description": "## 🏁 Objective Perform a sequence of interactions (message → parameter → message) in order to unlock the flag.",
+    "full_description": "# Challenge C07 — Multi-Step Unlock\n\n## 🏁 Objective\nPerform a sequence of interactions (message → parameter → message) in order to unlock the flag.\n\n## 🧩 Task\nDiscover the three-step sequence and execute it in the correct order to get the flag.\n\n## Explanation\nThis challenge simulates workflows where multiple conditions must be satisfied in sequence. A typical robotic system may require a startup handshake, a configuration change, and then a final confirmation.  \n\nHere you will:\n- Send a first message to a topic to start the sequence.\n- Modify a node parameter to satisfy an intermediate gate.\n- Finally, send a second message to complete the sequence.\n\nThis enforces reasoning about state, ordering, and multi-modal node interaction (topics + parameters).\n",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c08",
+    "title": "Challenge C08 — Service Unlock + Topic Validation",
+    "description": "## 🏁 Objective Call a service that gives you a challenge word, then publish that word to a topic to receive the flag.",
+    "full_description": "# Challenge C08 — Service Unlock + Topic Validation\n\n## 🏁 Objective\nCall a service that gives you a challenge word, then publish that word to a topic to receive the flag.\n\n## 🧩 Task\nFind the service endpoint that returns the challenge word. Publish that word on the node's response topic — when the node receives the correct word, it will publish the flag.\n\n## Explanation\nThis exercise mixes synchronous (service) and asynchronous (topic) interactions. You will:\n- Discover and call a service to receive a one-time challenge word.\n- Use that word as a payload on a topic the node listens to.\n- The node validates the message and, if correct, publishes the flag.\n\nThis pattern resembles challenge-response flows in distributed systems and teaches how different ROS2 communication primitives can be combined.\n",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c09",
+    "title": "Challenge C09 — Parameter-Protected Service",
+    "description": "## 🏁 Objective Call a service that only returns the flag if a node parameter has the correct value.",
+    "full_description": "# Challenge C09 — Parameter-Protected Service\n\n## 🏁 Objective\nCall a service that only returns the flag if a node parameter has the correct value.\n\n## 🧩 Task\nDiscover the node's service and the parameter it checks. Set the parameter to the correct value, then call the service to obtain the flag.\n\n## Explanation\nThis challenge demonstrates how node parameters can gate access to functionality. Services provide synchronous request/response behavior, and by checking a parameter you can protect operations or require explicit configuration.  \n\nYou'll practice:\n- Inspecting and changing node parameters\n- Invoking services\n- Understanding simple access control using runtime configuration\n",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c10",
+    "title": "Challenge C10 — Multi-Node Graph Puzzle",
+    "description": "## 🏁 Objective Use two nodes working together to discover and obtain the final flag.",
+    "full_description": "# Challenge C10 — Multi-Node Graph Puzzle\n\n## 🏁 Objective\nUse two nodes working together to discover and obtain the final flag.\n\n## 🧩 Task\nDiscover Node A's hint service, call it to receive a hint, then use that hint by sending it to Node B's topic. If correct, Node B will publish the final flag.\n\n## Explanation\nThis puzzle requires discovering and interacting with multiple nodes and combining service and topic interactions. Node A provides a hint via a service; Node B expects that hint on a specific topic and will publish the final flag when the correct hint is received.  \n\nSkills reinforced:\n- Graph exploration: finding nodes, services, and topics in a multi-node system\n- Combining synchronous (service) and asynchronous (topic) communication\n- Thinking across the system rather than focusing on a single node\n",
+    "difficulty": "Medium",
+    "category": "00 Introduction",
+    "points": 100
+  },
+  {
+    "id": "c100",
+    "title": "Challenge C100 — Quaternion/Rotation Echo",
+    "description": "## Objective Understand basic 3D orientation representation in ROS2 and practice converting and publishing quaternions.",
+    "full_description": "# Challenge C100 — Quaternion/Rotation Echo\n\n## Objective\nUnderstand basic 3D orientation representation in ROS2 and practice converting and publishing quaternions.\n\n## Task\n- Subscribe to the topic `c100/orientation`\n- Decode the quaternion (roll, pitch, yaw or axis-angle)\n- Compute the inverse rotation\n- Publish the inverse quaternion on `c100/inverse`\n\nThe node will emit the flag when the inverse is correct.\n\n## Concepts\n- `geometry_msgs/msg/Quaternion`\n- Quaternion math (inverse)\n- ROS2 publishers & subscribers\n- Spinning and timers\n- Coordinate frame reasoning\n",
+    "difficulty": "Medium",
+    "category": "01 Intermediate",
+    "points": 100
+  },
+  {
+    "id": "c201",
+    "title": "Challenge c201 — Advanced",
+    "description": "## 🏁 Objective Solve the challenge to get the flag.",
+    "full_description": "# Challenge c201 — Advanced\n\n## 🏁 Objective\nSolve the challenge to get the flag.\n\n## 🧩 Task\nUse ROS2 CLI to find the flag.\n\n## 💡 Concepts Explained\nROS2 basics.\n",
+    "difficulty": "Hard",
+    "category": "02 Advanced",
+    "points": 100
+  }
+]
