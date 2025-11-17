@@ -31,12 +31,10 @@ def parse_challenge_readme(description: str) -> Dict[str, str]:
     current_content = []
     
     for line in lines:
-        # Skip the main title (first # header)
         if line.startswith('# ') and not sections['title']:
             sections['title'] = line.replace('# ', '').strip()
             continue
         
-        # Detect section headers
         if '🎯 Objective' in line or line.strip().startswith('## 🎯'):
             if current_section and current_content:
                 sections[current_section] = '\n'.join(current_content).strip()
@@ -68,7 +66,6 @@ def parse_challenge_readme(description: str) -> Dict[str, str]:
             current_section = 'hints'
             current_content = []
         elif line.strip() == '---':
-            # End of content marker - save current section
             if current_section and current_content:
                 sections[current_section] = '\n'.join(current_content).strip()
             break
@@ -76,7 +73,6 @@ def parse_challenge_readme(description: str) -> Dict[str, str]:
             if current_section:
                 current_content.append(line)
     
-    # Add the last section
     if current_section and current_content:
         sections[current_section] = '\n'.join(current_content).strip()
     
@@ -88,24 +84,36 @@ def show_challenge(
     challenges: List[Dict],
     state: Dict,
     on_back_click: Callable,
-    on_solve_callback: Callable
+    on_solve_callback: Callable,
+    user_id: str = "user1"
 ):
     is_solved = is_challenge_solved(challenge['id'], state)
-    terminal = None
+    active_terminals = []
+    terminal_counter = [0]
+    container_name = f"nodearena-{user_id}-{challenge['id']}"
     
-    # Parse the README into sections
     sections = parse_challenge_readme(challenge['full_description'])
+    
+    # Cleanup function when leaving the challenge
+    def cleanup_and_navigate(callback):
+        # Stop all terminals and remove the container
+        for terminal in active_terminals:
+            terminal.stop()
+        # Force cleanup the container on the first terminal
+        if active_terminals:
+            active_terminals[0].force_cleanup()
+        callback()
     
     with ui.column().classes('w-full p-6 gap-6'):
         with ui.row().classes('items-center gap-4 mb-2'):
-            ui.button(icon='arrow_back', on_click=on_back_click).props('flat color=primary')
+            ui.button(icon='arrow_back', on_click=lambda: cleanup_and_navigate(on_back_click)).props('flat color=primary')
             ui.label(challenge['title']).classes('text-4xl font-bold text-white')
             if is_solved:
                 ui.icon('check_circle').classes('text-green-500').style('font-size: 32px;')
         
         with ui.row().classes('w-full gap-6 items-start'):
             with ui.column().classes('flex-1 gap-6'):
-                # Objective and Story - Always visible
+                # Objective and Story
                 with ui.card().classes('w-full p-6'):
                     if sections['objective']:
                         with ui.column().classes('gap-2 mb-4'):
@@ -128,13 +136,12 @@ def show_challenge(
                                 ui.label('Your Mission').classes('text-xl font-bold text-white')
                             ui.markdown(sections['mission']).classes('text-base')
                 
-                # Commands section - Collapsible but open by default
+                # Commands section
                 if sections['commands']:
                     with ui.expansion('🛠️ Commands & Tutorial', icon='terminal').classes('w-full') as commands_exp:
                         commands_exp.props('default-opened')
                         commands_exp.classes('bg-[#1a1d24]')
                         with ui.card().classes('w-full p-6 bg-transparent').style('box-shadow: none; border: none;'):
-                            # Add custom CSS for better markdown rendering
                             ui.add_head_html('''
                             <style>
                                 .command-section h3 {
@@ -204,7 +211,7 @@ def show_challenge(
                             ''')
                             ui.markdown(sections['commands']).classes('text-base command-section')
                 
-                # Learning section - Collapsible
+                # Learning section
                 if sections['learning']:
                     with ui.expansion('📚 What You\'re Learning', icon='school').classes('w-full') as learn_exp:
                         learn_exp.classes('bg-[#1a1d24]')
@@ -248,27 +255,50 @@ def show_challenge(
                             ''')
                             ui.markdown(sections['learning']).classes('text-base learning-section')
                 
-                # Terminal section
+                # Terminal section with Docker
                 with ui.card().classes('w-full p-0'):
                     with ui.row().classes('items-center justify-between p-6 pb-3'):
                         with ui.row().classes('items-center gap-2'):
                             ui.icon('terminal').classes('text-primary').style('font-size: 24px;')
                             ui.label('Terminal').classes('text-xl font-bold text-white')
                         
-                        ui.button(icon='splitscreen', on_click=lambda: split_terminal()).props('flat round color=primary').classes('text-sm')
+                        with ui.row().classes('gap-1'):
+                            ui.button(icon='splitscreen', on_click=lambda: split_terminal()).props('flat round color=primary').classes('text-sm')
+                            ui.button(icon='close', on_click=lambda: remove_terminal()).props('flat round color=red').classes('text-sm')
                     
-                    terminal_container = ui.row().classes('w-full gap-2')
+                    terminal_container = ui.column().classes('w-full gap-2 p-6 pt-0')
                     
                     with terminal_container:
-                        terminal1 = create_terminal()
-                        ui.timer(0.1, lambda t=terminal1: asyncio.create_task(t.start_shell('/bin/bash')), once=True)
+                        terminal1 = create_terminal(
+                            use_docker=True,
+                            container_name=container_name,
+                            image="nodearena-intro:latest",
+                            create_new_container=True,
+                            on_close=None
+                        )
+                        active_terminals.append(terminal1)
                 
                 def split_terminal():
+                    terminal_counter[0] += 1
                     with terminal_container:
-                        new_terminal = create_terminal()
-                        asyncio.create_task(new_terminal.start_shell('/bin/bash'))
+                        new_terminal = create_terminal(
+                            use_docker=True,
+                            container_name=container_name,
+                            image="nodearena-intro:latest",
+                            create_new_container=False,
+                            on_close=None
+                        )
+                        active_terminals.append(new_terminal)
+                
+                def remove_terminal():
+                    if len(active_terminals) > 1:
+                        terminal_to_remove = active_terminals.pop()
+                        terminal_to_remove.stop()
+                        # Get the card containing the terminal and delete it
+                        parent_card = terminal_to_remove.xterm.parent_slot.parent
+                        parent_card.delete()
             
-            # Right sidebar - Flag submission and info
+            # Right sidebar
             with ui.column().classes('w-96 gap-6'):
                 with ui.card().classes('w-full p-6'):
                     with ui.row().classes('items-center gap-2 mb-4'):
@@ -333,7 +363,7 @@ def show_challenge(
                                                     f'width: {old_percentage}%; background: #14b8a6; transition: width 1.5s ease-out;'
                                                 )
                                     
-                                    ui.button('Continue', on_click=lambda: (dialog.close(), on_solve_callback())).props('color=primary size=lg').classes('mt-6')
+                                    ui.button('Continue', on_click=lambda: (dialog.close(), cleanup_and_navigate(on_solve_callback))).props('color=primary size=lg').classes('mt-6')
                                 
                                 dialog.open()
                                 
@@ -371,7 +401,7 @@ def show_challenge(
                                 ui.label('Author:').classes('font-semibold').style('color: #9aa0a6')
                                 ui.label(challenge['author']).classes('text-white')
                 
-                # Hints card - Only shown when there are hints
+                # Hints card
                 if sections['hints'] or challenge.get('hints'):
                     with ui.card().classes('w-full p-6'):
                         hint_icon = None
@@ -423,7 +453,6 @@ def show_challenge(
                         
                         with hints_content:
                             if sections['hints']:
-                                # Display the hints content as markdown in a styled container
                                 with ui.element('div').classes('hint-item w-full'):
                                     ui.markdown(sections['hints']).style('color: #fbbf24;')
                             elif challenge.get('hints'):

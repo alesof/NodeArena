@@ -1,5 +1,5 @@
 """
-ROS2 CTF Platform - Main Entry Point
+Node Arena - Main Entry Point
 """
 from nicegui import ui
 from pathlib import Path
@@ -21,7 +21,7 @@ from views.profile import show_profile
 
 
 class CTFApp:
-    """Main CTF Platform Application"""
+    """Main Node Arena Application"""
     
     def __init__(self):
         self.challenges = load_challenges()

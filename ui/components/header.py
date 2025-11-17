@@ -8,7 +8,7 @@ def create_header(on_dashboard_click, on_library_click, on_profile_click):
     """Create the application header with navigation"""
     with ui.row().classes('items-center justify-between w-full'):
         # Logo/Name on the left
-        ui.label('ROS2 CTF Platform').classes('text-2xl font-bold cursor-pointer').on('click', on_dashboard_click)
+        ui.label('Node Arena - Alpha v0.0.1').classes('text-2xl font-bold cursor-pointer').on('click', on_dashboard_click)
         
         # Navigation menu on the right
         with ui.row().classes('items-center gap-4'):
